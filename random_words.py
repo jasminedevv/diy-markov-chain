@@ -1,10 +1,11 @@
 import random
 
+# reformat this to only need to open the file once
 def get_word():
     ''' Returns a random word from the system dictionary excluding contractions. '''
 
     word_file = "/usr/share/dict/words"
-    words = open(word_file).read().splitlines()
+    words = open(word_file).readlines()
     word = random.choice(words)
     # prevents it from grabbing words with single quotes in them
     while '\'' in word:
