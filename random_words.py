@@ -24,7 +24,7 @@ def get_words(num, wordlist):
 
 if __name__ == "__main__":
     from sys import argv
-    word_file = "/usr/share/dict/words"
-    words = open(word_file).read().splitlines()
-    my_words = get_words(int( argv[1] ), words)
-    print(" ".join(my_words))
+    with open("/usr/share/dict/words") as words:
+        words = words.read().splitlines()
+        my_words = get_words(int( argv[1] ), words)
+        print(" ".join(my_words))
