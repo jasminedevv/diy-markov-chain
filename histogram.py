@@ -9,6 +9,14 @@ has to go through the whole corpus 1 word at a time. Can we avoid this?
 can we compress all the words down to a number and then search through the list that matches the number? Wait but why?
 
 The obvious way:
+have a dict where the key is the word and the value is the number
+for each word in corpus:
+    try:
+        increment the value of the word key
+    except KeyError:
+        add the element to the dict with value 1
+ 
+The weird way:
 make a list of lists that looks like [['the', 67], ['a', 68]]
 iterate through all the words in the corpus
 for each word check the list:
@@ -23,6 +31,18 @@ The slightly less obvious way:
 sort the list
 count each instance
 '''
+
+
+def hist(wordlist):
+    hist = dict()
+    for word in wordlist:
+        try:
+            hist[word] += 1
+        except KeyError:
+            hist[word] = 1
+    return hist
+
+
 
 class Histogram(list):
     # is there a way to make this not O(n2)?
@@ -71,6 +91,7 @@ if __name__ == "__main__":
     corpus = open(corp_file).read()
     print(corpus)
     corpus = corpus.split()
-    print(corpus)
-    my_hist = Histogram(corpus)
-    print(my_hist)
+    print(hist(corpus))
+    # print(corpus)
+    # my_hist = Histogram(corpus)
+    # print(my_hist)
