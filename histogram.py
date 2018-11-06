@@ -17,7 +17,7 @@ for each word in corpus:
         add the element to the dict with value 1
  
 The weird way:
-make a list of lists that looks like [['the', 67], ['a', 68]]
+make a list of tuples that looks like [('the', 67), ('a', 68), ... , ("Guadeloupe", 1)]
 iterate through all the words in the corpus
 for each word check the list:
     check hist[i[0]]
@@ -34,6 +34,9 @@ count each instance
 
 
 def hist(wordlist):
+    '''
+        Takes a list of words and return a histogram in the form of a dict.
+    '''
     hist = dict()
     for word in wordlist:
         try:
@@ -42,7 +45,25 @@ def hist(wordlist):
             hist[word] = 1
     return hist
 
-
+def tuple_hist(wordlist):
+    hist = []
+    for word_in in wordlist:
+        print("checking word:", word_in)
+        for i, (word_out, count) in enumerate(hist):
+            print("checking against: ", word_out)
+            if word_in is word_out:
+                count += 1
+                prev = hist[i-1]
+                # count is the 
+                if count > prev[1]:
+                    # swap them
+                    prev, count = count, prev
+                break
+            # if it didn't find the word
+            print("ok should append now")
+            hist.append( (word_in, 1) )
+    return hist
+            
 
 class Histogram(list):
     # is there a way to make this not O(n2)?
@@ -91,7 +112,7 @@ if __name__ == "__main__":
     corpus = open(corp_file).read()
     print(corpus)
     corpus = corpus.split()
-    print(hist(corpus))
+    print(tuple_hist(corpus))
     # print(corpus)
     # my_hist = Histogram(corpus)
     # print(my_hist)
