@@ -45,24 +45,44 @@ def hist(wordlist):
             hist[word] = 1
     return hist
 
+def swap_elements_in_list(my_list, j, k):
+    my_list[j], my_list[k] = my_list[k], my_list[j]
+
+def check_list_of_tuples_for_word(my_list, word):
+    '''
+        Should return True or False, swaps the positions of two elements sometimes
+    '''
+    for i, (word_out, count) in enumerate(hist):
+            # print("Iterator: "+str(i), "word out: "+word_out, "count: "+str(count))
+            # print(word_in, word_out)
+            # print(word_in, word_out)
+            if word_out == word:
+                # print("word in was equal to word out")  
+                count += 1
+                # print(count, "<-- should be more than one")
+                prev = my_list[i-1]
+                # count is the current selected element, prev is the one before it in the list
+                print(count, prev[1])
+                if count > prev[1]:
+                    # print("swapping them")
+                    # swap them
+                    swap_elements_in_list(my_list, i, i-1)
+                return True
+            return False
+            # if it didn't find the word
+
 def tuple_hist(wordlist):
     hist = []
+    # iterates through the word list
     for word_in in wordlist:
-        print("checking word:", word_in)
-        for i, (word_out, count) in enumerate(hist):
-            print("checking against: ", word_out)
-            if word_in is word_out:
-                count += 1
-                prev = hist[i-1]
-                # count is the 
-                if count > prev[1]:
-                    # swap them
-                    prev, count = count, prev
-                break
-            # if it didn't find the word
-            print("ok should append now")
-            hist.append( (word_in, 1) )
-    return hist
+        # print("checking word:", word_in)
+        # iterates through the histogram for each word in the wordlist
+        did_find_word = check_list_of_tuples_for_word(hist, word_in)
+        if not did_find_word:
+            new_element = (word_in, 1)
+            print("appending:", new_element)
+            hist.append( new_element )
+    return hist 
             
 
 class Histogram(list):
