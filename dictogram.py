@@ -35,6 +35,12 @@ class Dictogram(dict):
             return self[word]
         except KeyError:
             return 0
+    
+    def _set_cumulative_distribution(self):
+        count_sum = 0
+        for index, (_, count) in enumerate(self):
+            count_sum += count
+        self.cumulative_distribution = count_sum
 
 
 def print_histogram(word_list):
