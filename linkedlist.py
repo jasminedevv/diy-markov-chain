@@ -36,7 +36,7 @@ class LinkedList(object):
     def items(self):
         """Return a list (dynamic array) of all items in this linked list.
         Best and worst case running time: O(n) for n items in the list (length)
-        because we always need to loop through all n nodes to get each item."""
+        because we always need to loop through all n nodes to get each item.""" 
         items = []  # O(1) time to create empty list
         # Start at head node
         node = self.head  # O(1) time to assign new variable
@@ -56,18 +56,40 @@ class LinkedList(object):
         """Return the length of this linked list by traversing its nodes.
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Loop through all nodes and count one for each
+        count = 0
+        node = self.head
+        while node is not None:
+            count += 1
+            node = node.next
+        return count
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Create new node to hold given item
         # TODO: Append node after tail, if it exists
+        new_node = Node(item)
+        # if list is empty
+        if self.head is None:
+            self.tail = new_node
+            self.head = new_node
+        else:
+            self.tail.next = new_node
+            self.tail = self.tail.next
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
         TODO: Running time: O(???) Why and under what conditions?"""
-        # TODO: Create new node to hold given item
-        # TODO: Prepend node before head, if it exists
+        # Create new node to hold given item
+        new_node = Node(item)
+        # Prepend node before head, if it exists
+        if self.head is not None:
+            new_node.next = self.head
+            self.head = new_node
+        else:
+            self.head = new_node
+            self.tail = new_node
+        
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
@@ -75,6 +97,14 @@ class LinkedList(object):
         TODO: Worst case running time: O(???) Why and under what conditions?"""
         # TODO: Loop through all nodes to find item where quality(item) is True
         # TODO: Check if node's data satisfies given quality function
+        
+        node = self.head
+        while node is not None:
+            if quality(node.data):
+                return node.data
+            else:
+                node = node.next
+        return None
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
@@ -84,6 +114,33 @@ class LinkedList(object):
         # TODO: Update previous node to skip around node with matching data
         # TODO: Otherwise raise error to tell user that delete has failed
         # Hint: raise ValueError('Item not found: {}'.format(item))
+        node = self.head
+        prev_node = None
+        while node is not None:
+            # node was found
+            if node.data is item:
+                # if found node is the head
+                if node is self.head:
+                    # we deleted the last item in the list
+                    if node.next is None:
+                        self.head = None
+                        self.tail = None
+                        return 1
+                    # we deleted the head but there were more items
+                    else:
+                        self.head = node.next
+                        return 1
+                elif node.next is None:
+                    self.tail = prev_node
+                    prev_node.next = None
+                    return 1
+                else:
+                    prev_node.next = node.next
+                    return 1
+            else:
+                prev_node = node
+                node = node.next
+        raise ValueError('Item not found: {}'.format(item))
 
 
 def test_linked_list():

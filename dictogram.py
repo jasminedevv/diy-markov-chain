@@ -8,6 +8,9 @@ class Dictogram(dict):
 
     def __init__(self, word_list=None):
         """Initialize this histogram as a new dict and count given words."""
+        # dict.__init__(self)
+        # super().__init__()
+        # are equivalent to below
         super(Dictogram, self).__init__()  # Initialize this as a new dict
         # Add properties to track useful word counts for this histogram
         self.types = 0  # Count of distinct word types in this histogram
@@ -22,10 +25,10 @@ class Dictogram(dict):
         # Increase word frequency by count
         try:
             self[word] += count
-            self.tokens += 1
+            self.tokens += count
         except KeyError:
             self[word] = count
-            self.tokens += 1
+            self.tokens += count
             self.types += 1
 
     def frequency(self, word):
@@ -36,11 +39,12 @@ class Dictogram(dict):
         except KeyError:
             return 0
     
-    def _set_cumulative_distribution(self):
-        count_sum = 0
-        for index, (_, count) in enumerate(self):
-            count_sum += count
-        self.cumulative_distribution = count_sum
+    # def _set_cumulative_distribution(self):
+    #     count_sum = 0
+    #     for 
+        
+    #         count_sum += count
+    #     self.cumulative_distribution = count_sum
 
 
 def print_histogram(word_list):

@@ -16,6 +16,8 @@ class Listogram(list):
         if word_list is not None:
             for word in word_list:
                 self.add_count(word)
+        print("List finished. Now sorting.")
+        self = sorted(self, key=lambda x: x[1])
 
     def add_count(self, word, count=1):
         """Increase frequency count of given word by given count amount."""
@@ -23,7 +25,7 @@ class Listogram(list):
         word_index = self._index(word)
         if word_index is None:
             self.append( (word, count) )
-            self.types += count
+            self.types += 1
             self.tokens += count
         elif isinstance(word_index, int):
             old_count = self[word_index][1]
