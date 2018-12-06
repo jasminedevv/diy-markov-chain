@@ -38,13 +38,19 @@ class Dictogram(dict):
             return self[word]
         except KeyError:
             return 0
-    
-    # def _set_cumulative_distribution(self):
-    #     count_sum = 0
-    #     for 
-        
-    #         count_sum += count
-    #     self.cumulative_distribution = count_sum
+
+    def return_weighted_random_word(self):
+        # Step 1: Generate random number between 0 and total count - 1
+        random_int = random.randint(0, self.tokens-1)
+        index = 0
+        list_of_keys = self.keys()
+        # print 'the random index is:', random_int
+        for i in range(0, self.types):
+            index += self[list_of_keys[i]]
+            # print index
+            if(index > random_int):
+                # print list_of_keys[i]
+                return list_of_keys[i]
 
 
 def print_histogram(word_list):
