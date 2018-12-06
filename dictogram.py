@@ -1,6 +1,7 @@
 #!python
 
 from __future__ import division, print_function  # Python 2 and 3 compatibility
+from random import randrange
 
 
 class Dictogram(dict):
@@ -39,18 +40,30 @@ class Dictogram(dict):
         except KeyError:
             return 0
 
-    def return_weighted_random_word(self):
-        # Step 1: Generate random number between 0 and total count - 1
-        random_int = random.randint(0, self.tokens-1)
-        index = 0
-        list_of_keys = self.keys()
-        # print 'the random index is:', random_int
-        for i in range(0, self.types):
-            index += self[list_of_keys[i]]
-            # print index
-            if(index > random_int):
-                # print list_of_keys[i]
-                return list_of_keys[i]
+    def random_word(self):
+        random_word = ''
+        sum_of_weights = sum(self.values())
+        random_weight = randrange(sum_of_weights)
+
+        for key, value in self.items():
+            if random_weight - value < 0:
+                random_word = key
+                break
+            else:
+                random_weight -= value
+        
+        return random_word
+        # # Generate random number between 0 and total count - 1
+        # random_int = randint(0, self.tokens-1)
+        # index = 0
+        # list_of_keys = self.keys()
+        # # print 'the random index is:', random_int
+        # for i in range(0, self.types):
+        #     index += self[list_of_keys[i]]
+        #     # print index
+        #     if(index > random_int):
+        #         # print list_of_keys[i]
+        #         return list_of_keys[i]
 
 
 def print_histogram(word_list):
