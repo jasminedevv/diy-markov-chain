@@ -106,6 +106,17 @@ class LinkedList(object):
                 node = node.next
         return None
 
+    def replace(self, quality, data):
+        found = False
+        node = self.head
+        while not found and node is not None:
+            if quality(node.data) is True:
+                node.data = data
+                found = True
+            node = node.next
+        if not found:
+            raise ValueError('Replacement target not found.')
+
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
         TODO: Best case running time: O(???) Why and under what conditions?
