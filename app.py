@@ -33,10 +33,7 @@ app = Flask(__name__)
 import os
 
 from markov import MarkovModel
-
-
 import re
-
 
 def read_corpus(corpus):
     with open(corpus, 'r') as file:
@@ -59,56 +56,20 @@ def tokenize(corpus):
         if '.' in word:
             text.insert(i+1, "END")
             text.insert(i+2, "START")
-        '''
-        if '\n' in text[i]:
-            # print("word in question:", text[i])
-            right = text[:i]
-            # print("right:", right)
-            # print(right)
-            left = text[i:]
-            # print("left:", left)
-            words = word.split('\n')
-            # print(word)
-            # print("words:", words)
-            # try:
-            right.extend(words)
-            # print(right)
-            left.extend(right)
-            text = left
-            # except AttributeError:
-            #     print(right)
-            #     print(left)
-            #     print("attr error")
-        '''
     return text
 
 def give_sentence():
     text = tokenize("corpus.txt")
-
-    # re.sub(r'(?<=\n).*', 'START END', text)
-
     model = MarkovModel(text)
-
     sentence = model.random_walk()
-
     sentence = " ".join(sentence[:-1])
-
-    # print()
-
-    # (?<=\n).*
-
     re.sub(r'(?<=\n).*', '', sentence)
     new_sentence = ""
-    
     sentence = sentence.split('\n')
-
-    # print(sentence)
-
     if type(sentence) is list:
         return max(sentence, key=len)
     else:
         return sentence
-
 
 def butcher_word(word):
     butchered = list(word)
@@ -130,6 +91,7 @@ def butcher_sentence(sentence):
 @app.route('/')
 def hello_world():
     sentence = give_sentence()
+    print(sentence)
     return sentence
 
 @app.route('/butcher-word/<word>')
