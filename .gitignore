@@ -1,6 +1,6 @@
 .vscode
 .pytest_cache
 __pycache__
-corpus.txt
+my_essays.txt
 beemovie.txt
 env
