@@ -66,6 +66,5 @@ def main():
     print(" ".join(seusse[:-1]))
 
 
-
 if __name__ == '__main__':
     main()
